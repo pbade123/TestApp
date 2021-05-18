@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 
+import Config from 'react-native-config';
 import {Button} from 'react-native-elements';
 
 const App = () => {
@@ -32,13 +33,14 @@ const App = () => {
             <Text>Right</Text>
           </View>
         </TouchableOpacity> */}
+        <Text style={styles.text}>API_URL={Config.API_URL}</Text>
         <Button
           icon={{
             name: 'arrow-right',
             size: 15,
             color: 'white',
           }}
-          title="Button with icon object"
+          title="API_URL={Config.API_URL}"
         />
         {/* <Button
           title="Press me"
