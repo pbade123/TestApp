@@ -41,6 +41,9 @@ const App = () => {
             color: 'white',
           }}
           title="API_URL={Config.API_URL}"
+          onPress={() => {
+            console.log(Config);
+          }}
         />
         {/* <Button
           title="Press me"
