@@ -2,6 +2,7 @@ import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 
 import Album from './src/screen/Album';
+import AnimationScroll from './src/screen/AnimationScroll';
 
 // const App = () => {
 //   return (
@@ -46,7 +47,8 @@ import Album from './src/screen/Album';
 const App = () => {
   return (
     <View style={{flex: 1}}>
-      <Album />
+      {/* <Album /> */}
+      <AnimationScroll />
     </View>
   );
 };
