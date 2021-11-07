@@ -1,10 +1,13 @@
 apply plugin: "com.android.application"
 
 project.ext.envConfigFiles = [
-    debug: ".env",      
-    staging: ".env.staging",
-    release: ".env.production",
-]
+   developmentrelease: ".env.development",
+   developmentdebug: ".env.development",
+   stagingrelease: ".env.staging",
+   stagingdebug: ".env.staging",
+   productionrelease: ".env.production",
+   productiondebug: ".env.production"
+ ]
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
@@ -184,8 +187,19 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             
         }
+    }
+    flavorDimensions "env"
+    productFlavors {
+        production {
+            resValue "string", "app_name", "MyApp Prod"
+        }
         staging {
-            initWith release
+            resValue "string", "app_name", "MyApp staging"
+            applicationIdSuffix ".staging"
+        }
+        development {
+            resValue "string", "app_name", "MyApp dev"
+            applicationIdSuffix ".dev"
         }
     }
 

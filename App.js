@@ -1,5 +1,7 @@
 import React from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View, Text} from 'react-native';
+
+import Config from 'react-native-config';
 
 import Album from './src/screen/Album';
 import AnimationScroll from './src/screen/AnimationScroll';
@@ -46,9 +48,10 @@ import AnimationScroll from './src/screen/AnimationScroll';
 
 const App = () => {
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.container}>
+      <Text style={styles.text}>API_URL={Config.API_URL}</Text>
       {/* <Album /> */}
-      <AnimationScroll />
+      {/* <AnimationScroll /> */}
     </View>
   );
 };
@@ -59,6 +62,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  text: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
   },
   button: {
     borderRadius: 60,

@@ -10,13 +10,19 @@
     "android:internal": "fastlane android internal",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "android:staging": "react-native run-android --variant=stagingdebug",
+    "android:staging-release": "react-native run-android --variant=stagingrelease",
+    "android:dev": "react-native run-android --variant=developmentdebug",
+    "android:dev-release": "react-native run-android --variant=developmentrelease",
+    "android:prod": "react-native run-android --variant=productiondebug",
+    "android:prod-release": "react-native run-android --variant=productionrelease"
   },
   "dependencies": {
     "faker": "^5.5.3",
     "react": "17.0.1",
     "react-native": "0.64.0",
-    "react-native-config": "^1.4.2",
+    "react-native-config": "^1.4.4",
     "react-native-elements": "^3.4.1",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-vector-icons": "^8.1.0"
