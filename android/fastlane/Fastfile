@@ -1,0 +1,71 @@
+before_all do
+  ensure_git_branch(
+  branch: 'fastlane'
+)
+  ensure_git_status_clean
+  git_pull(rebase: true)
+end
+default_platform(:android)
+
+platform :android do
+  desc "Submit a new build to Google Play Console"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  lane :beta do
+    private_lane :slack_message do |options|
+      slack(
+              slack_url: "https://hooks.slack.com/services/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",
+              channel: "fastlaneNotify",
+              success: true,
+              message: options[:message],
+              payload: { 
+                  "🗓 Build Date" => Time.new.to_s,
+                  "🌎 Environment" => ENV['ENV_NAME']
+              },
+              default_payloads: [:git_branch, :test_result, :last_git_commit_hash],
+      )
+    app_identifier = "com.test.production.app"
+
+    api_environment = "staging"
+    if ENV["IS_PRODUCTION"] == "true"
+      api_environment = "production"
+    end
+    ENV["ENVFILE"]=".env.#{api_environment}"
+
+    puts "API_HOST: #{ENV['API_HOST']}"
+    puts "IS_PRODUCTION: #{ENV['IS_PRODUCTION']}"
+    puts "ENVFILE: #{ENV['ENVFILE']}"
+
+    gradle_file = "./android/app/build.gradle"
+
+    android_set_version_name(
+      version_name: "1.0.0",
+      gradle_file: gradle_file
+    )
+
+    android_set_version_code(
+      gradle_file: gradle_file
+    )
+
+    gradle(
+      project_dir: './android',
+      task: 'assemble',
+      build_type: 'release'
+    )
+
+    supply(
+      json_key: 'google_play_console_key',
+      track: 'beta',
+      apk: './android/app/build/outputs/apk/release/app-release.apk',
+      package_name: app_identifier
+    )
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store
+  end
+end
